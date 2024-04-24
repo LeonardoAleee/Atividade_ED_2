@@ -315,7 +315,7 @@ void deleteNodebyValue(Node** head, int iData)
         return;
     }
 
-    for ((Node*) node = (*head); node != nullptr; node = node -> ptrNext)
+    for (Node* node = (*head); node != nullptr; node = node -> ptrNext)
     {
         if (node -> iPayload == iData)
         {
