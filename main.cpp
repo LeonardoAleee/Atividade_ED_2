@@ -306,48 +306,41 @@ Node* searchNodebyValue(Node** head, int value) {
     return nullptr;
 }
 
-void deleteNodebyValue(Node** head, int value)
+void deleteNodebyValue(Node** head, int iData)
 {
-    if ((*head) == nullptr) {
-        
-        cout << "A lista está vazia" << endl;
-        
+    Node* delNode = nullptr;
+
+    if ((*head) == nullptr)
+    {
         return;
     }
 
-    Node* current = (*head);
-    Node* previous = nullptr;
-
-    // Percorre a lista até encontrar o nó com o valor desejado ou chegar ao final da lista
-    while (current != nullptr)
+    for ((Node*) node = (*head); node != nullptr; node = node -> ptrNext)
     {
-        if (current -> iPayload == value)
+        if (node -> iPayload == iData)
         {
-            // Se o nó atual contiver o valor desejado, remova-o da lista
-            if (previous != nullptr)
-            {
-                // Se não for o primeiro nó, ajuste os ponteiros para pular o nó atual
-                previous -> ptrNext = current -> ptrNext;
-                if (current -> ptrNext != nullptr)
-                {
-                    current -> ptrNext -> ptrPrev = previous;
-                }
-                free(current);
-            } 
-            else 
-            {
-                // Se for o primeiro nó, ajuste o ponteiro do head para o próximo nó
-                (*head) = current -> ptrNext;
-                if ((*head) != nullptr)
-                {
-                    (*head) -> ptrPrev = nullptr;
-                }
-                free(current);
-            }
-            
-            return; 
+            delNode = node;
+            break;
         }
-        previous = current;
-        current = current->ptrNext;
     }
+
+    if (delNode == nullptr)
+    {
+        return;
+    }
+
+    if (*head == delNode)
+    {
+        *head = delNode -> ptrNext;
+    }
+
+    if (delNode -> ptrPrev != nullptr)
+    {
+        delNode -> ptrPrev -> ptrNext = delNode -> ptrNext;
+    }
+    if (delNode -> ptrNext != nullptr) {
+        delNode -> ptrNext -> ptrPrev = delNode -> ptrPrev;
+    }
+
+    free(delNode);
 }
